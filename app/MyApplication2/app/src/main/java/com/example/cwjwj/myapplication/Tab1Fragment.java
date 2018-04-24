@@ -121,7 +121,10 @@ import okhttp3.Response;
                                      listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                          @Override
                                          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                             Groups group=groupsList.get(position);
+
                                              Intent intent=new Intent(getActivity(),receiverActivity.class);
+                                             intent.putExtra("groupName",group.getName());
                                              startActivity(intent);
                                          }
                                      });
