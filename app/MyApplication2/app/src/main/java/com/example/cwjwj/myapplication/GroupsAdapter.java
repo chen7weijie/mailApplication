@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,15 +32,19 @@ public class GroupsAdapter extends ArrayAdapter<Groups>{
             view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder=new ViewHolder();
             viewHolder.groupName=(TextView)view.findViewById(R.id.group_name);
+            viewHolder.man=view.findViewById(R.id.man);
             view.setTag(viewHolder);
         }else{
             view=convertView;
             viewHolder=(ViewHolder)view.getTag();
         }
+        viewHolder.man.setImageResource(R.drawable.man);
         viewHolder.groupName.setText(group.getName());
         return view;
     }
     class ViewHolder{
         TextView groupName;
+        ImageView man;
+
     }
 }

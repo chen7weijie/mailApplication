@@ -21,7 +21,7 @@ public class MyAdapter extends FragmentPagerAdapter {
         if (i <= 1) {
             return fragments.get(i);
         }
-        return fragments.get(2);
+        return fragments.get(i);
     }
 
     public int getCount() {
