@@ -15,7 +15,7 @@ $sql = "INSERT INTO e_group (name, description)
 VALUES ('$name', '这是第5个分组')";
 
 if (mysqli_query($conn, $sql)) {
-    echo "新记录插入成功";
+    echo "success";
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }

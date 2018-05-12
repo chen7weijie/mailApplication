@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                     String responseData=response.body().string();
                     //showResponse(responseData);
                     if(responseData.equals("成功登陆")){
-                        Intent intent=new Intent(LoginActivity.this,TabActivity.class);
+                        Intent intent=new Intent(LoginActivity.this,MenuActivity.class);
                         startActivity(intent);
                     }
                     else{

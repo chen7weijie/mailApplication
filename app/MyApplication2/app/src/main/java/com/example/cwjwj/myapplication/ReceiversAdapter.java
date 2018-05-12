@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,16 +30,19 @@ public class ReceiversAdapter extends ArrayAdapter<Receivers> {
             view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder=new ViewHolder();
             viewHolder.receiverName=(TextView) view.findViewById(R.id.receiver_name);
+            viewHolder.receiverImage=view.findViewById(R.id.receiver_img);
             view.setTag(viewHolder);
         }else {
             view=convertView;
             viewHolder=(ViewHolder)view.getTag();
 
         }
+        viewHolder.receiverImage.setImageResource(R.drawable.man);
         viewHolder.receiverName.setText(receiver.getName());
         return view;
     }
     class ViewHolder{
         TextView receiverName;
+        ImageView receiverImage;
     }
 }

@@ -98,6 +98,15 @@ import okhttp3.Response;
                                      GroupsAdapter groupsAdapter=new GroupsAdapter(getActivity(),R.layout.group_item,groupsList);
                                      listView.setAdapter(groupsAdapter);
                                      registerForContextMenu(listView);
+                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                         @Override
+                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                             Intent intent=new Intent(getActivity(),receiverActivity.class);
+                                             String groupName=groupsList.get(position).getName();
+                                             intent.putExtra("groupName",groupName);
+                                             startActivity(intent);
+                                         }
+                                     });
                                      listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                                          @Override
                                          public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

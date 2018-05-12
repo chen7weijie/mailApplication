@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:icon="@drawable/add_new"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" >
+    <menu>
+        <group android:checkableBehavior="none">
+            <item
+                android:id="@+id/nav_mail"
+                android:title="mail"
+                android:icon="@drawable/mail"/>
+            <item
+                android:id="@+id/nav_addgroup"
+                android:title="addgroup"
+                android:icon="@drawable/addgroup"/>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout"
+                android:title="logout"/>
+        </group>
+    </menu>
+
+    </item>>
+</menu>

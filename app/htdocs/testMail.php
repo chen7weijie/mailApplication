@@ -19,7 +19,7 @@ $mail->addReplyTo("chen7weijie@163.com","Reply");// 设置回复人信息，指�
 
 
 $mail->Subject = "This is a test mailxx";// 邮件标题
-$mail->Body = "This is the html body <b>very stronge非常强壮</b>";// 邮件正文
+$mail->Body = "测试邮件";// 邮件正文
 //$mail->AltBody = "This is the plain text纯文本";// 这个是设置纯文本方式显示的正文内容，如果不支持Html方式，就会用到这个，基本无用
 
 if(!$mail->send()){// 发送邮件
