@@ -1,5 +1,6 @@
 package com.example.cwjwj.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.cwjwj.myapplication.group_manage.AddGroupActivity;
 
 import java.util.ArrayList;
 
@@ -50,7 +53,7 @@ public class MenuActivity extends AppCompatActivity
         fragments.add(new MessageFragment());
         titles=new ArrayList<>();
         titles.add("消息接收者");
-        titles.add("消息发布");
+        titles.add("消息任务发布");
         titles.add("软件管理");
 
         viewPager.setOffscreenPageLimit(3);
@@ -88,9 +91,12 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id==R.id.nav_mail){
+        else if(id==R.id.nav_mail){
             Toast.makeText(MenuActivity.this,"this is a mail menu",Toast.LENGTH_SHORT).show();
             return true;
+        }
+        else if(id==R.id.nav_addgroup){
+            enterAddgroup();
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,5 +121,10 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    //进入添加分组的活动
+    public void enterAddgroup(){
+        Intent intent=new Intent(MenuActivity.this, AddGroupActivity.class);
+        startActivity(intent);
     }
 }

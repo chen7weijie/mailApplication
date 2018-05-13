@@ -25,13 +25,18 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".TabActivity" />
-        <activity android:name=".receiverActivity" />
+        <activity
+            android:name=".receiverActivity"
+            android:label="消息实时发布系统"
+            android:theme="@style/AppTheme" />
         <activity android:name=".group_manage.GroupInfoActivity" />
         <activity android:name=".receiver_manage.SendMailActivity" />
         <activity
             android:name=".MenuActivity"
             android:label="消息实时发布系统"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".group_manage.AddGroupActivity" />
+        <activity android:name=".receiver_manage.AddReceiverActivity"></activity>
     </application>
 
 </manifest>

@@ -4,25 +4,22 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:icon="@drawable/add_new"
+        android:icon="@drawable/plus"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" >
     <menu>
         <group android:checkableBehavior="none">
             <item
                 android:id="@+id/nav_mail"
-                android:title="mail"
+                android:title="添加消息"
                 android:icon="@drawable/mail"/>
             <item
                 android:id="@+id/nav_addgroup"
-                android:title="addgroup"
+                android:title="添加分组"
                 android:icon="@drawable/addgroup"/>
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/logout"
-                android:title="logout"/>
+
         </group>
     </menu>
 
-    </item>>
+    </item>
 </menu>

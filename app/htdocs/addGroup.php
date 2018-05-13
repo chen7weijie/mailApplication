@@ -3,7 +3,8 @@ $servername = "localhost";
 $username = "root";
 $password = "cwj727834048";
 $dbname = "email_send_system";
-$name="分组5";
+$name=$_POST['groupName'];
+$description=$_POST['description'];
 // 创建连接
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // 检测连接
@@ -12,7 +13,7 @@ if (!$conn) {
 }
 
 $sql = "INSERT INTO e_group (name, description)
-VALUES ('$name', '这是第5个分组')";
+VALUES ('$name', '$description')";
 
 if (mysqli_query($conn, $sql)) {
     echo "success";

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".receiver_manage.AddReceiverActivity">
+    <TextView
+        android:id="@+id/add_receiver_name"
+        android:text="输入姓名"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/input_receiver_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/add_receiver_email"
+        android:text="输入邮箱地址"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/input_receiver_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/choose_sex_cue"
+        android:text="选择性别"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rg_main_sex"
+    >
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="男"
+        android:id="@+id/rb_main_boy"
+        android:checked="true"
+    />
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="女"
+        android:id="@+id/rb_main_girl"
+        />
+</RadioGroup>
+    <TextView
+        android:id="@+id/add_receiver_des"
+        android:text="输入接收者简介"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/input_receiver_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<Button
+        android:id="@+id/add_receiver_button"
+        android:text="添加"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

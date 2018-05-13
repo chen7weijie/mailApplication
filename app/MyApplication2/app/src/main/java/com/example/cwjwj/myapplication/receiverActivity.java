@@ -3,14 +3,17 @@ package com.example.cwjwj.myapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.cwjwj.myapplication.receiver_manage.AddReceiverActivity;
 import com.example.cwjwj.myapplication.receiver_manage.SendMailActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,16 +35,54 @@ public class receiverActivity extends AppCompatActivity {
     private ListView listView;
     private int receiverPostion;
     private Receivers chooseReceiver;
+    private String groupname;
+    private String flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receiver);
+        Toolbar toolbar = findViewById(R.id.receiver_toolbar);
+        setSupportActionBar(toolbar);
         listView=findViewById(R.id.receiver_listview);
         Intent intent=getIntent();
-        String data=intent.getStringExtra("groupName");
-        Log.d("receiverActivity",data);
-        getReceiverWithOkhttp(data);
+        groupname=intent.getStringExtra("groupName");
+        Log.d("receiverActivity",groupname);
+        getReceiverWithOkhttp(groupname);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if(resultCode==RESULT_OK){
+                    flag=data.getStringExtra("data_return");
+                    Log.d("receiverActivity",flag);
+                    if(flag.equals("success")){
+                        getReceiverWithOkhttp(groupname);
+                    }
+                }
+        }
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.receiver_toolbar,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.add_receiver){
+            Intent intent=new Intent(receiverActivity.this, AddReceiverActivity.class);
+            intent.putExtra("groupName",groupname);
+            startActivityForResult(intent,1);
+        }
+        return true;
     }
 
     @Override
