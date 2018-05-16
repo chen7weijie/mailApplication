@@ -2,23 +2,23 @@ package com.example.cwjwj.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.cwjwj.myapplication.adapter.AddressActivity;
 import com.example.cwjwj.myapplication.group_manage.AddGroupActivity;
+import com.example.cwjwj.myapplication.info_manage.AddInfoActivity;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,7 @@ public class MenuActivity extends AppCompatActivity
     private ArrayList<Fragment> fragments;
     private MyAdapter myAdapter;
     private ArrayList<String> titles;
+    private String flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class MenuActivity extends AppCompatActivity
         fragments.add(new MessageFragment());
         titles=new ArrayList<>();
         titles.add("消息接收者");
-        titles.add("消息任务发布");
-        titles.add("软件管理");
+        titles.add("消息管理");
+        titles.add("消息任务管理");
 
         viewPager.setOffscreenPageLimit(3);
 
@@ -81,6 +82,17 @@ public class MenuActivity extends AppCompatActivity
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if(resultCode==RESULT_OK){
+                    flag=data.getStringExtra("data_return");
+                    Log.d("MessageFragmentFlag",flag);
+                }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -92,8 +104,7 @@ public class MenuActivity extends AppCompatActivity
             return true;
         }
         else if(id==R.id.nav_mail){
-            Toast.makeText(MenuActivity.this,"this is a mail menu",Toast.LENGTH_SHORT).show();
-            return true;
+            enterAddInfo();
         }
         else if(id==R.id.nav_addgroup){
             enterAddgroup();
@@ -109,10 +120,10 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_mail) {
-            // Handle the camera action
-        }
-        else if(id==R.id.nav_setting){
 
+        }
+        else if(id==R.id.nav_setting){//更换系统邮箱地址
+            enterAddress();
         }
         else if(id==R.id.nav_logout){
 
@@ -126,5 +137,15 @@ public class MenuActivity extends AppCompatActivity
     public void enterAddgroup(){
         Intent intent=new Intent(MenuActivity.this, AddGroupActivity.class);
         startActivity(intent);
+    }
+    //进入更改系统邮箱的活动
+    public void enterAddress(){
+        Intent intent=new Intent(MenuActivity.this,AddressActivity.class);
+        startActivityForResult(intent,1);
+    }
+    //进入添加消息的活动
+    public void enterAddInfo(){
+        Intent intent=new Intent(MenuActivity.this, AddInfoActivity.class);
+        startActivityForResult(intent,1);
     }
 }
