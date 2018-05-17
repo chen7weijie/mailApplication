@@ -66,7 +66,7 @@ public class AddInfoActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputTitle.getText().toString()!=null&&inputContent.getText().toString()!=null&&inputDes.getText().toString()!=null&&chooseType!=null){
+                if(inputTitle.getText().toString().length()>0&&inputContent.getText().toString().length()>0&&inputDes.getText().toString().length()>0&&chooseType!=null){
                     String title=inputTitle.getText().toString();
                     String content=inputContent.getText().toString();
                     String des=inputDes.getText().toString();
@@ -121,6 +121,22 @@ public class AddInfoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         Log.d("AddInfoActivity",response.body().string());
+                        if(response.body().string().equals("success")){
+                            AddInfoActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(AddInfoActivity.this,"添加成功！",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else{
+                            AddInfoActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(AddInfoActivity.this,"添加失败!",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 });
             }

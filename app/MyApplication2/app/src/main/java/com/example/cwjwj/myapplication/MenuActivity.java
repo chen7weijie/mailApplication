@@ -126,7 +126,6 @@ public class MenuActivity extends AppCompatActivity
             enterAddress();
         }
         else if(id==R.id.nav_logout){
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -147,5 +146,10 @@ public class MenuActivity extends AppCompatActivity
     public void enterAddInfo(){
         Intent intent=new Intent(MenuActivity.this, AddInfoActivity.class);
         startActivityForResult(intent,1);
+    }
+    //进入添加任务的活动
+    public void enterAddTask(){
+        Intent intent=new Intent(MenuActivity.this,AddTaskActivity.class);
+        startActivity(intent);
     }
 }

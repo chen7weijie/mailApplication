@@ -100,6 +100,12 @@ public class MessageFragment extends Fragment{
                     listView.deferNotifyDataSetChanged();
                 }
             }break;
+            case 5:{
+                if(chooseId!=0&&choosePostion!=-1) {
+                    String id = String.valueOf(chooseId);
+                    enterAddTask(id);
+                }
+            };break;
         }
         return true;
     }
@@ -145,6 +151,7 @@ public class MessageFragment extends Fragment{
                                             menu.setHeaderTitle("请选择");
                                             menu.add(0, 3, 1, "查看详细信息");
                                             menu.add(0, 4, 1, "删除");
+                                            menu.add(0, 5, 1, "设置发送任务");
                                         }
                                     });
 
@@ -189,5 +196,12 @@ public class MessageFragment extends Fragment{
                 });
             }
         }).start();
+    }
+
+    private void enterAddTask(String id){
+        Intent intent=new Intent(getActivity(),AddTaskActivity.class);
+        intent.putExtra("infoId",id);
+        startActivity(intent);
+
     }
 }
