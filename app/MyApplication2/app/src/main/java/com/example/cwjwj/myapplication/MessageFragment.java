@@ -131,7 +131,6 @@ public class MessageFragment extends Fragment{
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getActivity(),"message"+informationList.get(0).getType(),Toast.LENGTH_SHORT).show();
                                     InformationAdapter adapter=new InformationAdapter(getActivity(),R.layout.info_item,informationList);
                                     listView.setAdapter(adapter);
                                     registerForContextMenu(listView);

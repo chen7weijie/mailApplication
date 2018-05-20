@@ -68,12 +68,6 @@ public class AddressActivity extends AppCompatActivity {
                         responseData=response.body().string();
                         addressList=parseJsonToAddress(responseData);
                         Log.d("AddressActivity", responseData);
-                        AddressActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(AddressActivity.this,responseData,Toast.LENGTH_SHORT).show();
-                            }
-                        });
                         if(response.body()!=null){
 
                             if(addressList!=null){

@@ -35,7 +35,6 @@ public class InformationAdapter extends ArrayAdapter<Information>{
             viewHolder=new ViewHolder();
             viewHolder.infoImg=view.findViewById(R.id.info);
             viewHolder.title=view.findViewById(R.id.info_title);
-            viewHolder.des=view.findViewById(R.id.info_des);
             viewHolder.type=view.findViewById(R.id.infotype);
             view.setTag(viewHolder);
         }
@@ -45,7 +44,6 @@ public class InformationAdapter extends ArrayAdapter<Information>{
         }
         viewHolder.infoImg.setImageResource(R.drawable.info);
         viewHolder.title.setText("标题:"+information.getTitle());
-        viewHolder.des.setText(" 主要内容:"+information.getDescription());
         if(information.getType().equals("timing")) {
             viewHolder.type.setText(" 消息类型:" + "定时发送");
         }
@@ -57,6 +55,5 @@ public class InformationAdapter extends ArrayAdapter<Information>{
     class ViewHolder{
         ImageView infoImg;
         TextView title;
-        TextView des;
         TextView type;
     }

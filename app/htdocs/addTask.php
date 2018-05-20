@@ -3,30 +3,27 @@ $servername = "localhost";
 $username = "root";
 $password = "cwj727834048";
 $dbname = "email_send_system";
-$title=$_POST['title'];
-$content=$_POST['content'];
-$des=$_POST['des'];
-$typeid=$_POST['chooseType'];
-$id=0;
+$date=$_POST['date'];
+$time=$_POST['time'];
+$infoid=$_POST['infoId'];
+$groupname=$_POST['groupName'];
+$groupid=0;
+$msgid=(int)$infoid;
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-if($typeid=="立即发送"){
-	$id=1;
-}
-else if($typeid=="每周一次"){
-	$id=2;
-}
-else if($typeid=="每日发送"){
-	$id=3;
+if($groupname=="所有分组"){
+	$groupid=0;
 }
 else{
-	$id=4;
+$sql="select * from e_group where name='$groupname'";
+$result=mysqli_query($conn, $sql);
+$row=$result->fetch_object();
+$groupid=$row->id;
 }
-$insertsql = "INSERT INTO information (title, content, description, info_type_id)
-VALUES ('$title','$content','$des','$id')";
-
+$insertsql = "INSERT INTO task
+VALUES ('$groupid','$msgid','$date','$time',1)";
 if (mysqli_query($conn, $insertsql)) {
     echo "success";
 } else {

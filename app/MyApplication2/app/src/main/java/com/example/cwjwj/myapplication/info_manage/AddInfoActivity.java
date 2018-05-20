@@ -112,33 +112,32 @@ public class AddInfoActivity extends AppCompatActivity {
                         .url("http://192.168.191.1/addInfo.php")
                         .post(formBody)
                         .build();
-                client.newCall(request).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
+                try {
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    //showResponse(responseData);
+                    if(responseData.equals("success")){
+                        AddInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AddInfoActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+                    }
+                    else{
+                        AddInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(AddInfoActivity.this,"添加失败",Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        Log.d("AddInfoActivity",response.body().string());
-                        if(response.body().string().equals("success")){
-                            AddInfoActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(AddInfoActivity.this,"添加成功！",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                        else{
-                            AddInfoActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(AddInfoActivity.this,"添加失败!",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }
-                });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }

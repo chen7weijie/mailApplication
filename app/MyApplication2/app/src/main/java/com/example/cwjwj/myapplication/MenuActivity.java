@@ -51,7 +51,7 @@ public class MenuActivity extends AppCompatActivity
         fragments=new ArrayList<>();
         fragments.add(new Tab1Fragment());
         fragments.add(new MessageFragment());
-        fragments.add(new MessageFragment());
+        fragments.add(new TaskFragment());
         titles=new ArrayList<>();
         titles.add("消息接收者");
         titles.add("消息管理");
