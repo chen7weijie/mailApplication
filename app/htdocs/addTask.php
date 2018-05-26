@@ -23,7 +23,7 @@ $row=$result->fetch_object();
 $groupid=$row->id;
 }
 $insertsql = "INSERT INTO task
-VALUES ('$groupid','$msgid','$date','$time',1)";
+VALUES (null,'$groupid','$msgid','$date','$time',1)";
 if (mysqli_query($conn, $insertsql)) {
     echo "success";
 } else {

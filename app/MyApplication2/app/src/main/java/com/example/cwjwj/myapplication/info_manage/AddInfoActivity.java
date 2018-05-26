@@ -91,7 +91,6 @@ public class AddInfoActivity extends AppCompatActivity {
 
     public void initData(){
         dataList=new ArrayList<String>();
-        dataList.add("立即发送");
         dataList.add("每周一次");
         dataList.add("每日发送");
         dataList.add("定时发送");

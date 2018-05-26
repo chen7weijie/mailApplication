@@ -1,14 +1,20 @@
 package com.example.cwjwj.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.cwjwj.myapplication.adapter.TaskAdapter;
@@ -21,6 +27,7 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,6 +37,9 @@ public class TaskFragment extends Fragment {
     private String responseData;
     private List<Task> taskList;
     private SwipeRefreshLayout taskRefresh;
+    private Task chooseTask;
+    private int taskChoosePosition=-1;
+    private int chooseId=0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +61,26 @@ public class TaskFragment extends Fragment {
         });
 
     }
+
+
+
+   /* public boolean onContextItemSelected(MenuItem item) {
+        Log.d("ssb6"," "+chooseId);
+        Log.d("ssb7"," "+taskChoosePosition);
+        switch (item.getItemId()){
+            case 6:{
+            if(taskChoosePosition!=-1&&chooseId!=0){
+                TaskAdapter taskAdapter=new TaskAdapter(getActivity(),R.layout.task_item,taskList);
+                taskList.remove(taskChoosePosition);
+                listView.setAdapter(taskAdapter);
+                listView.deferNotifyDataSetChanged();
+                //deleteTask(chooseId);
+            }
+            }break;
+            case 7:break;
+        }
+        return true;
+    }*/
 
     private void refreshData(){
         new Thread(new Runnable() {
@@ -94,8 +124,61 @@ public class TaskFragment extends Fragment {
                             public void run() {
                                 TaskAdapter taskAdapter=new TaskAdapter(getActivity(),R.layout.task_item,taskList);
                                 listView.setAdapter(taskAdapter);
+                                //registerForContextMenu(listView);
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        taskChoosePosition=position;
+                                        chooseTask=taskList.get(position);
+                                        chooseId=chooseTask.getId();
+                                        Log.d("ssb4"," "+chooseId);
+                                        Log.d("ssb5"," "+taskChoosePosition);
+                                        Intent intent=new Intent(getActivity(),TaskInfoActivity.class);
+                                        intent.putExtra("taskId",chooseId);
+                                        startActivity(intent);
+                                    }
+                                });
+                                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                    @Override
+                                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                        taskChoosePosition=position;
+                                        chooseTask=taskList.get(position);
+                                        chooseId=chooseTask.getId();
+                                        Log.d("ssb4"," "+chooseId);
+                                        Log.d("ssb5"," "+taskChoosePosition);
+                                        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());
+                                        dialog.setTitle("提示");
+                                        dialog.setMessage("确定删除该任务吗？");
+                                        dialog.setCancelable(false);
+                                        dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        dialog.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        dialog.show();
+                                        return true;
+                                    }
+                                });
+                               /* listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                                    @Override
+                                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+                                        menu.setHeaderTitle("请选择");
+                                        menu.add(0, 6, 1, "删除该任务");
+                                        menu.add(0, 7, 1, "改变任务状态");
+
+                                    }
+                                });*/
+
                             }
                         });
+
                     }
                 });
             }
@@ -107,4 +190,29 @@ public class TaskFragment extends Fragment {
         List<Task> taskList=gson.fromJson(data,new TypeToken<List<Task>>(){}.getType());
         return  taskList;
     }
+
+    public void deleteTask(final int chooseId){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String id=String.valueOf(chooseId);
+                OkHttpClient client=new OkHttpClient();
+                FormBody formBody=new FormBody.Builder()
+                        .add("taskId",id)
+                        .build();
+                Request request=new Request.Builder()
+                        .url("http://192.168.191.1/deleteTask.php")
+                        .post(formBody)
+                        .build();
+                try {
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 }

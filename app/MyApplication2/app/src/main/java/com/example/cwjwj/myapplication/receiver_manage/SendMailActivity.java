@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cwjwj.myapplication.R;
 
@@ -24,6 +25,7 @@ public class SendMailActivity extends AppCompatActivity {
     private EditText content;
     private TextView titleCue;
     private TextView contentCue;
+    private String responseData;
 
 
     @Override
@@ -61,7 +63,20 @@ public class SendMailActivity extends AppCompatActivity {
                         .url("http://192.168.191.1/sendMail.php")
                         .post(formBody)
                         .build();
-                client.newCall(request).enqueue(new Callback() {
+                try{
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    if(!responseData.equals("Message has been sent.")){
+                        Toast.makeText(SendMailActivity.this,"发送失败",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(SendMailActivity.this,"发送成功",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                /*client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
 
@@ -70,8 +85,10 @@ public class SendMailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         Log.d("SendMailActivity",response.body().string());
+                        responseData=response.body().string();
+
                     }
-                });
+                });*/
             }
         }).start();
     }

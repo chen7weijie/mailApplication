@@ -1,12 +1,14 @@
 package com.example.cwjwj.myapplication.entity;
 
-public class Task {
+public class TaskInfo {
     private int id;
     private String title;
+    private String content;
     private String name;
     private String send_date;
     private String send_time;
     private int status;
+
     public int getId() {
         return id;
     }
@@ -15,13 +17,20 @@ public class Task {
         this.id = id;
     }
 
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getName() {
@@ -55,6 +64,7 @@ public class Task {
     public void setStatus(int status) {
         this.status = status;
     }
+
 
 
 }

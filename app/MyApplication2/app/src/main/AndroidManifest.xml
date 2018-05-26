@@ -45,7 +45,9 @@
             android:name=".info_manage.AddInfoActivity"
             android:label="新增消息"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AddTaskActivity"></activity>
+        <activity android:name=".AddTaskActivity" />
+        <activity android:name=".TaskInfoActivity"
+            android:label="任务具体信息"></activity>
     </application>
 
 </manifest>
