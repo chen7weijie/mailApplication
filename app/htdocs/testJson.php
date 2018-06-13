@@ -1,0 +1,9 @@
+<?php
+$data=$_POST['data'];
+$de_json=json_decode($data,TRUE);
+$count=count($de_json);
+for($i=0;$i<$count;$i++){
+	$id=$de_json[$i]['id'];
+	var_dump($id);
+}
+?>

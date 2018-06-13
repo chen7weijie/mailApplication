@@ -39,15 +39,21 @@
         <activity android:name=".receiver_manage.AddReceiverActivity" />
         <activity
             android:name=".adapter.AddressActivity"
-            android:label="更换系统邮箱"
+            android:label="系统相关设置"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".info_manage.AddInfoActivity"
             android:label="新增消息"
             android:theme="@style/AppTheme" />
         <activity android:name=".AddTaskActivity" />
-        <activity android:name=".TaskInfoActivity"
-            android:label="任务具体信息"></activity>
+        <activity
+            android:name=".TaskInfoActivity"
+            android:label="任务具体信息" />
+        <activity
+            android:name=".group_manage.SendGroupMailActivity"
+            android:label="发送即时邮件" />
+        <activity android:name=".info_manage.ShowInfoActivity" />
+        <activity android:name=".receiver_manage.ShowReceiverActivity"></activity>
     </application>
 
 </manifest>

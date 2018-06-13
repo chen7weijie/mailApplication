@@ -10,19 +10,30 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.cwjwj.myapplication.adapter.ChooseGroupAdapter;
+import com.example.cwjwj.myapplication.info_manage.AddInfoActivity;
 import com.google.gson.Gson;
+
+
 import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -40,13 +51,17 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
     private String time;
     private List<Groups> groupsList=null;
     private ArrayList<String> dataList;
+    private ArrayList<Integer> idList;
     private String responseData;
     private ArrayAdapter<String> adapter;
-    private Spinner spinner;
+   // private Spinner spinner;
     private String groupName;
+    private int choosePosition=0;
     private String infoId;
     private String chooseData="你选择的发送时间为：";
     private TextView showData;
+    private ListView  groupListView;
+    private ArrayList<Integer> chooseList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +72,17 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         Button chooseDate=findViewById(R.id.datepicker);
         Button chooseTime=findViewById(R.id.timepiker);
         Button addTask=findViewById(R.id.add_task);
-        spinner=findViewById(R.id.group_spinner);
+       // spinner=findViewById(R.id.group_spinner);
+        groupListView=findViewById(R.id.choosegroup_listview);
         showData=findViewById(R.id.show_choose_data);
         dataList=new ArrayList<String>();
+        idList=new ArrayList<Integer>();
+        chooseList=new ArrayList<Integer>();
+
         showData.setText(chooseData);
-        getGroups();
+        //getGroups();
+        getChooseGroups();
+
         chooseDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,13 +116,39 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(date!=null&&time!=null&&groupName!=null) {
+
+                for (int i=0;i<idList.size();i++){
+                    Log.d("add","chooseId"+idList.get(i));
+                }
+                JSONArray jsonArray=new JSONArray();
+                JSONObject jsonObject;
+                try {
+                    for (int i=0;i<idList.size();i++){
+                        jsonObject=new JSONObject();
+                        jsonObject.put("id",idList.get(i));
+                        jsonArray.put(jsonObject);
+                    }
+                    Log.d("add",jsonArray.toString());
+                    //testJson(jsonArray.toString());
+                    if(date!=null&&time!=null&&jsonArray.toString()!=null) {
+                        addTask(date,time,jsonArray.toString(),infoId);
+                    }
+                    else
+                    {
+                        Toast.makeText(AddTaskActivity.this,"请设置时间或日期",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+                /*if(date!=null&&time!=null&&groupName!=null) {
                      addTask(date,time,groupName,infoId);
                 }
                 else
                 {
                     Toast.makeText(AddTaskActivity.this,"请设置时间或日期",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 
@@ -136,7 +183,114 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         return groupsList;
     }
 
-    public void getGroups(){
+    public void testJson(final String jsondata){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client=new OkHttpClient();
+                FormBody formBody=new FormBody.Builder().add("data",jsondata).build();
+                Request request=new Request.Builder().url("http://192.168.191.1/testJson.php")
+                        .post(formBody)
+                        .build();
+                try {
+                    Response response=client.newCall(request).execute();
+                    String responseData=response.body().string();
+                    Log.d("Add",responseData);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+
+
+            }
+        }).start();
+    }
+
+    public void getChooseGroups(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpClient client=new OkHttpClient();
+                Request request=new Request.Builder().url("http://192.168.191.1/canSendGroup.php").build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if(response.body()!=null){
+                            responseData=response.body().string();
+                            groupsList=parseJsonToGroups(responseData);
+
+                            for(int i=0;i<groupsList.size();i++){
+                                chooseList.add(0);
+                            }
+                            //Log.d("Add","Task"+chooseList.get(0));
+                            AddTaskActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    final ChooseGroupAdapter adapter=new ChooseGroupAdapter(AddTaskActivity.this,R.layout.choosegroup_item,groupsList,chooseList);
+                                    groupListView.setAdapter(adapter);
+                                    groupListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            choosePosition=position;
+                                            if(adapter.getCs().get(position)==1){//已经选择
+                                                adapter.getCs().set(position,0);
+                                                if(idList.size()>0){
+                                                    for(int i=0;i<idList.size();i++){
+                                                        if(idList.get(i)==groupsList.get(position).getId()){
+                                                            idList.remove(i);
+                                                            i--;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else {//未选择
+                                                adapter.getCs().set(position,1);
+                                                idList.add(groupsList.get(position).getId());
+                                            }
+                                            Log.d("Add","Task"+adapter.getCs().get(position));
+                                            //Log.d("Add","Task"+chooseList.get(position));
+                                            /*int choosen=adapter.getChoosen();
+                                            if(choosen==0){
+                                                choosen=1;
+                                                adapter.setChoosen(choosen);
+                                                Log.d("Add","Task"+choosen);
+                                                        idList.add(groupsList.get(position).getId());
+
+                                            }
+                                            else{
+                                                choosen=0;
+                                                adapter.setChoosen(choosen);
+                                                Log.d("Add","Task"+choosen);
+                                              *//*  for(int i=0;i<idList.size();i++){
+                                                    if(idList.get(i)==groupsList.get(position).getId()){
+                                                        idList.remove(i);
+                                                        i--;
+                                                    }
+                                                }*//*
+
+
+                                            }*/
+                                            ChooseGroupAdapter.viewHolder viewHolder=(ChooseGroupAdapter.viewHolder)view.getTag();
+                                            viewHolder.groupChoose.toggle();
+
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /*public void getGroups(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -183,9 +337,9 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
                 });
             }
         }).start();
-    }
+    }*/
 
-    public void addTask(final String date,final String time,final String groupName,final String infoId){
+    public void addTask(final String date,final String time,final String jsonData,final String infoId){
 
         new Thread(new Runnable() {
             @Override
@@ -194,7 +348,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
                 FormBody formBody=new FormBody.Builder()
                         .add("date",date)
                         .add("time",time)
-                        .add("groupName",groupName)
+                        .add("jsonData",jsonData)
                         .add("infoId",infoId)
                         .build();
                 Request request=new Request.Builder()
@@ -204,6 +358,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
                 try {
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
+                    Log.d("add",responseData);
                     //showResponse(responseData);
                     if(responseData.equals("success")){
                         AddTaskActivity.this.runOnUiThread(new Runnable() {
@@ -231,4 +386,5 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         }).start();
 
     }
+
 }

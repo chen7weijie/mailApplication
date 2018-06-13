@@ -3,6 +3,7 @@ package com.example.cwjwj.myapplication.group_manage;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,35 +25,36 @@ import okhttp3.Response;
 
 public class AddGroupActivity extends AppCompatActivity {
     private TextView add_name_cue;
-    private TextView add_des_cue;
+    //private TextView add_des_cue;
     private EditText input_name;
-    private EditText input_description;
+    //private EditText input_description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+        Toolbar toolbar=findViewById(R.id.addgroup_toolbar);
+        setSupportActionBar(toolbar);
         add_name_cue=findViewById(R.id.add_group_name);
-        add_des_cue=findViewById(R.id.add_group_des);
+        //add_des_cue=findViewById(R.id.add_group_des);
         input_name=findViewById(R.id.input_group_name);
-        input_description=findViewById(R.id.input_group_des);
+       // input_description=findViewById(R.id.input_group_des);
         Button add=findViewById(R.id.add_group);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name=input_name.getText().toString();
-                String description=input_description.getText().toString();
-                addGroup(name,description);
+                //String description=input_description.getText().toString();
+                addGroup(name);
             }
         });
     }
-    private void addGroup(final String name,final String description){
+    private void addGroup(final String name){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 OkHttpClient client=new OkHttpClient();
                 FormBody formBody=new FormBody.Builder()
                         .add("groupName",name)
-                        .add("description",description)
                         .build();
                 Request request=new Request.Builder()
                         .url("http://192.168.191.1/addGroup.php")

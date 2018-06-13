@@ -38,13 +38,18 @@ public class GroupsAdapter extends ArrayAdapter<Groups>{
             view=convertView;
             viewHolder=(ViewHolder)view.getTag();
         }
-        viewHolder.man.setImageResource(R.drawable.man);
+        if(group.getStatus()==1) {
+            viewHolder.man.setImageResource(R.drawable.man_small);
+        }
+        else {
+            viewHolder.man.setImageResource(R.drawable.man_refuse);
+        }
         viewHolder.groupName.setText(group.getName());
         return view;
     }
-    class ViewHolder{
+    public class ViewHolder{
         TextView groupName;
-        ImageView man;
+        public ImageView man;
 
     }
 }

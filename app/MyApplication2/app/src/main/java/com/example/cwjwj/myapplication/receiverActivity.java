@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.cwjwj.myapplication.receiver_manage.AddReceiverActivity;
 import com.example.cwjwj.myapplication.receiver_manage.SendMailActivity;
+import com.example.cwjwj.myapplication.receiver_manage.ShowReceiverActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -88,7 +89,9 @@ public class receiverActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case 0:break;
+            case 0:{
+                enterShowReInfo(chooseReceiver.getId(),chooseReceiver.getName(),chooseReceiver.getEmail(),chooseReceiver.getSex(),chooseReceiver.getPhone_number());
+            }break;
             case 1:enterSendMail(chooseReceiver.getName());break;
             case 2: {
                 if(receiversList.remove(receiverPostion)!=null){
@@ -207,5 +210,16 @@ public class receiverActivity extends AppCompatActivity {
                 });
             }
         }).start();
+    }
+
+    private void enterShowReInfo(int id,String name,String email,String sex,String phone){
+        Intent intent=new Intent(receiverActivity.this, ShowReceiverActivity.class);
+        intent.putExtra("id",id);
+        intent.putExtra("name",name);
+        intent.putExtra("email",email);
+        intent.putExtra("sex",sex);
+        intent.putExtra("phone",phone);
+        startActivity(intent);
+
     }
 }

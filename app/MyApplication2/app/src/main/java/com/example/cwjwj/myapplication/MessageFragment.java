@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.cwjwj.myapplication.adapter.InformationAdapter;
 import com.example.cwjwj.myapplication.entity.Information;
+import com.example.cwjwj.myapplication.info_manage.ShowInfoActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -89,7 +90,13 @@ public class MessageFragment extends Fragment{
         Log.d("sssb3"," "+choosePostion);
         Log.d("sss", "MessageFragment "+item.getItemId());
         switch (item.getItemId()){
-            case 3:break;
+            case 3:{
+                if(chooseId!=0&&choosePostion!=-1) {
+                    String id = String.valueOf(chooseId);
+                    enterShowInfo(id,informationList.get(choosePostion).getTitle(),informationList.get(choosePostion).getContent(),
+                            informationList.get(choosePostion).getType());
+                }
+            }break;
             case 4:{
                 if(chooseId!=0&&choosePostion!=-1) {
                     String id = String.valueOf(chooseId);
@@ -202,5 +209,14 @@ public class MessageFragment extends Fragment{
         intent.putExtra("infoId",id);
         startActivity(intent);
 
+    }
+
+    private void enterShowInfo(String id,String title,String content,String type){
+        Intent intent=new Intent(getActivity(), ShowInfoActivity.class);
+        intent.putExtra("id",id);
+        intent.putExtra("title",title);
+        intent.putExtra("content",content);
+        intent.putExtra("type",type);
+        startActivity(intent);
     }
 }

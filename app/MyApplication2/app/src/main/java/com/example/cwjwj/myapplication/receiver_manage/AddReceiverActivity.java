@@ -3,6 +3,7 @@ package com.example.cwjwj.myapplication.receiver_manage;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.cwjwj.myapplication.MenuActivity;
 import com.example.cwjwj.myapplication.R;
@@ -39,6 +41,8 @@ public class AddReceiverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_receiver);
+        Toolbar toolbar=findViewById(R.id.add_receiver_toolbar);
+        setSupportActionBar(toolbar);
         groupName=getIntent().getStringExtra("groupName");
         add_name_cue=findViewById(R.id.add_receiver_name);
         add_email_cue=findViewById(R.id.add_receiver_email);

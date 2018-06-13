@@ -22,10 +22,15 @@
         android:text="选择发送时间"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Spinner
+    <!--<Spinner
         android:id="@+id/group_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_height="wrap_content"></Spinner>-->
+    <ListView
+        android:id="@+id/choosegroup_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="multipleChoice"/>
     <TextView
         android:id="@+id/show_choose_data"
         android:layout_width="match_parent"

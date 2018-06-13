@@ -2,6 +2,7 @@ package com.example.cwjwj.myapplication.receiver_manage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,8 @@ public class SendMailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_mail);
+        Toolbar toolbar=findViewById(R.id.send_email_toolbar);
+        setSupportActionBar(toolbar);
         titleCue=findViewById(R.id.title_cue);
         contentCue=findViewById(R.id.content_cue);
         content=findViewById(R.id.input_content);

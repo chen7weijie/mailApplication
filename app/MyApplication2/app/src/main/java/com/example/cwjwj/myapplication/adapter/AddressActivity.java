@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cwjwj.myapplication.R;
@@ -38,6 +40,8 @@ public class AddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_address);
         Toolbar toolbar = findViewById(R.id.address_toolbar);
         setSupportActionBar(toolbar);
+        TextView softopen=findViewById(R.id.soft_open);
+        Switch softSwitch=findViewById(R.id.soft_switch);
         listView=findViewById(R.id.address_listview);
         button=findViewById(R.id.change_address);
         getAddress();

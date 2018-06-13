@@ -3,8 +3,15 @@ package com.example.cwjwj.myapplication;
 public class Groups {
     private int id;
     private String name;
-    private String description;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -22,11 +29,5 @@ public class Groups {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

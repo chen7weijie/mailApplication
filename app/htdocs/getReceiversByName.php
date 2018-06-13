@@ -1,7 +1,7 @@
 <?php
 include_once("e_group.php");
 $groupName=$_POST['groupName'];
-$name="分组3";
+$name="分组2";
 //$group=Group::find(1);
 $group = Group::where('name', '=', $groupName)->first();//根据组名查出分组
 //echo($group->id);

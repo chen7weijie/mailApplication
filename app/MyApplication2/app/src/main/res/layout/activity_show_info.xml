@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".info_manage.ShowInfoActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/title_img"
+            android:src="@drawable/msg_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/ati_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息标题"
+            android:layout_marginTop="14dp"
+            android:textSize="18sp"/>
+        <EditText
+            android:id="@+id/new_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@android:drawable/edit_text"
+            android:enabled="true"
+            android:textCursorDrawable="@drawable/myedittext"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/content_img"
+            android:src="@drawable/msg_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/ati_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="消息内容"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/new_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
+        android:enabled="true"
+        android:textCursorDrawable="@drawable/myedittext"
+        android:textSize="18sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/type_cue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="消息类型："
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/show_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+<Button
+    android:id="@+id/save_change"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="保存"/>
+
+</LinearLayout>

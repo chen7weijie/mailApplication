@@ -47,6 +47,12 @@ public class InformationAdapter extends ArrayAdapter<Information>{
         if(information.getType().equals("timing")) {
             viewHolder.type.setText(" 消息类型:" + "定时发送");
         }
+        else if(information.getType().equals("week")){
+            viewHolder.type.setText(" 消息类型:" + "每周一次");
+        }
+        else {
+            viewHolder.type.setText(" 消息类型:" + "每天一次");
+        }
         return view;
     }
 

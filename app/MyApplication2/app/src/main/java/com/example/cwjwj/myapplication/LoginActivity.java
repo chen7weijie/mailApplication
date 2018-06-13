@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         name=(EditText)findViewById(R.id.name);
         password=(EditText)findViewById(R.id.password);
         message=(TextView)findViewById(R.id.message);
+        TextView accountCue=findViewById(R.id.account);
+        TextView passCue=findViewById(R.id.pass);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

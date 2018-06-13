@@ -122,7 +122,7 @@ public class TaskFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                TaskAdapter taskAdapter=new TaskAdapter(getActivity(),R.layout.task_item,taskList);
+                                final TaskAdapter taskAdapter=new TaskAdapter(getActivity(),R.layout.task_item,taskList);
                                 listView.setAdapter(taskAdapter);
                                 //registerForContextMenu(listView);
                                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,7 +140,7 @@ public class TaskFragment extends Fragment {
                                 });
                                 listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                                     @Override
-                                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                                         taskChoosePosition=position;
                                         chooseTask=taskList.get(position);
                                         chooseId=chooseTask.getId();
@@ -153,6 +153,10 @@ public class TaskFragment extends Fragment {
                                         dialog.setPositiveButton("是", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                deleteTask(chooseId);
+                                                taskList.remove(position);
+                                                listView.setAdapter(taskAdapter);
+                                                listView.deferNotifyDataSetChanged();
 
                                             }
                                         });
@@ -207,6 +211,7 @@ public class TaskFragment extends Fragment {
                 try {
                     Response response=client.newCall(request).execute();
                     String responseData=response.body().string();
+                    Log.d("task delete",responseData);
                 }
                 catch (IOException e){
                     e.printStackTrace();

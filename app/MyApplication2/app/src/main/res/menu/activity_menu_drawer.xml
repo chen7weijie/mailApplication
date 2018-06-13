@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_mail"
-            android:title="系统邮箱设置"
-            android:icon="@drawable/mail"/>
+            android:title="修改密码"
+            android:icon="@drawable/password"/>
         <item
             android:id="@+id/nav_setting"
-            android:title="setting"
+            android:title="系统相关设置"
             android:icon="@drawable/setting"/>
         <item
             android:id="@+id/nav_logout"
